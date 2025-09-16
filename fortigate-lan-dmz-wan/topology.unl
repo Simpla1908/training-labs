@@ -1,0 +1,73 @@
+<lab name="FortiGate LAN DMZ WAN" version="1">
+  <topology>
+    <!-- 🔹 FortiGate 1 (FGT1) -->
+    <node id="1" name="FGT1" type="qemu" image="fortigate-6.4.9" ram="1024" cpu="1">
+      <interface id="0" name="mgmt" />
+      <interface id="1" name="wan" />
+      <interface id="2" name="lan" />
+      <interface id="3" name="dmz" />
+    </node>
+
+    <!-- 🔹 FortiGate 2 (FGT2) -->
+    <node id="2" name="FGT2" type="qemu" image="fortigate-6.4.9" ram="1024" cpu="1">
+      <interface id="0" name="mgmt" />
+      <interface id="1" name="wan" />
+      <interface id="2" name="lan" />
+      <interface id="3" name="dmz" />
+    </node>
+
+    <!-- 🔹 Switch Cisco (LAN interne) -->
+    <node id="3" name="SW-LAN" type="iou" image="i86bi-linux-l2-adventerprisek9-15.1b" />
+
+    <!-- 🔹 Windows Server 2022 (AD, DNS, DHCP, WSUS) -->
+    <node id="4" name="WIN-SRV2022" type="qemu" image="windows-server-2022" ram="4096" cpu="2">
+      <interface id="0" name="eth0" />
+    </node>
+
+    <!-- 🔹 Windows 10 Client -->
+    <node id="5" name="WIN10-CL1" type="qemu" image="windows-10" ram="2048" cpu="2">
+      <interface id="0" name="eth0" />
+    </node>
+
+    <!-- 🔹 Ubuntu Server (DMZ Web + Zabbix) -->
+    <node id="6" name="UBUNTU" type="qemu" image="ubuntu-20.04" ram="2048" cpu="2">
+      <interface id="0" name="eth0" />
+    </node>
+
+    <!-- 🔹 Kali Linux (tests de sécu) -->
+    <node id="7" name="KALI" type="qemu" image="kali-linux" ram="2048" cpu="2">
+      <interface id="0" name="eth0" />
+    </node>
+
+    <!-- 🔹 Lien Management -->
+    <network id="1" name="MgmtNet" type="bridge" />
+    <link network_id="1">
+      <interface node_id="1" id="0" />
+      <interface node_id="2" id="0" />
+    </link>
+
+    <!-- 🔹 Lien WAN -->
+    <network id="2" name="WAN" type="bridge" />
+    <link network_id="2">
+      <interface node_id="1" id="1" />
+      <interface node_id="2" id="1" />
+    </link>
+
+    <!-- 🔹 Lien LAN -->
+    <network id="3" name="LAN" type="bridge" />
+    <link network_id="3">
+      <interface node_id="1" id="2" />
+      <interface node_id="3" id="0" />
+      <interface node_id="4" id="0" />
+      <interface node_id="5" id="0" />
+    </link>
+
+    <!-- 🔹 Lien DMZ -->
+    <network id="4" name="DMZ" type="bridge" />
+    <link network_id="4">
+      <interface node_id="1" id="3" />
+      <interface node_id="6" id="0" />
+      <interface node_id="7" id="0" />
+    </link>
+  </topology>
+</lab>
