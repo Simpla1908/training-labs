@@ -1,0 +1,27 @@
+enable
+configure terminal
+vlan 10
+ name IT
+vlan 20
+ name COMMERCIAL
+vlan 30
+ name RH
+!
+interface Ethernet0/0
+ switchport mode access
+ switchport access vlan 10
+!
+interface Ethernet0/1
+ switchport mode access
+ switchport access vlan 20
+!
+interface Ethernet0/2
+ switchport mode access
+ switchport access vlan 30
+!
+interface Ethernet0/3
+ switchport mode trunk
+ switchport trunk encapsulation dot1q
+!
+end
+copy running-config startup-config
