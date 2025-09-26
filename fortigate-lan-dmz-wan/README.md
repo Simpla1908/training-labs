@@ -73,6 +73,17 @@
 
 ---
 
+## 💡 Explication des Concepts Réseau (LAN, DMZ, WAN)
+
+### LAN (Local Area Network)
+Le LAN, ou Réseau Local, est un réseau informatique qui connecte des appareils (ordinateurs, serveurs, imprimantes, etc.) au sein d'une zone géographique restreinte, telle qu'un bureau, un bâtiment ou un campus. Il est caractérisé par des débits de données élevés et une connectivité directe entre les appareils. Dans une architecture d'entreprise, le LAN est la zone où se trouvent les utilisateurs finaux et les ressources internes partagées.
+
+### DMZ (Demilitarized Zone)
+La DMZ, ou Zone Démilitarisée, est un sous-réseau physique ou logique qui sépare un réseau local (LAN) d'un réseau non fiable (comme Internet ou le WAN). Son objectif principal est d'ajouter une couche de sécurité supplémentaire aux services accessibles depuis l'extérieur. Les serveurs qui doivent être accessibles depuis Internet (par exemple, les serveurs web, de messagerie, DNS, FTP) sont généralement placés dans la DMZ. Cela permet de les isoler du réseau interne en cas de compromission, protégeant ainsi les données sensibles du LAN. La DMZ est généralement protégée par un ou plusieurs pare-feu qui contrôlent strictement les flux entrants et sortants.
+
+### WAN (Wide Area Network)
+Le WAN, ou Réseau Étendu, est un réseau qui couvre une vaste zone géographique, comme une ville, un pays ou même le monde entier. Il connecte plusieurs LANs et DMZ entre eux, souvent via des liaisons de télécommunication publiques ou privées (Internet, MPLS, etc.). Le WAN permet aux utilisateurs et aux systèmes situés dans des emplacements distants de communiquer et de partager des ressources. Dans notre topologie, le WAN représente la connexion vers Internet et vers d'autres réseaux externes non contrôlés, où se trouvent potentiellement des acteurs malveillants (représentés ici par Kali Linux pour les tests de sécurité).
+
 ✍️ Auteur : **Landu Tamba Simplice**
 
 ````

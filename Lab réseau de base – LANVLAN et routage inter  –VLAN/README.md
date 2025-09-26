@@ -125,4 +125,27 @@ copy running-config startup-config
 - Les machines de différents VLANs (ex: WinServer2022 en VLAN 10 et Windows10 en VLAN 20) peuvent communiquer via le routeur.
 - Les pings entre toutes les machines devraient fonctionner après une configuration correcte.
 
+## 💡 Explication du LAN, VLAN et Routage Inter-VLAN
+
+### LAN (Local Area Network)
+Un LAN est un réseau informatique qui connecte des appareils au sein d'une zone géographique limitée, comme une maison, un bureau ou un campus. Les LANs sont caractérisés par des débits de données élevés et sont généralement basés sur la technologie Ethernet. Tous les appareils d'un même LAN peuvent communiquer directement entre eux.
+
+### VLAN (Virtual Local Area Network)
+Un VLAN est une méthode de segmentation logique d'un réseau local physique en plusieurs domaines de diffusion distincts. Cela signifie que des appareils connectés au même commutateur physique, ou à des commutateurs différents, peuvent être regroupés dans le même VLAN et communiquer comme s'ils étaient sur le même segment de réseau, même s'ils ne sont pas physiquement connectés au même port ou au même commutateur. Les VLANs améliorent la sécurité, simplifient l'administration du réseau et optimisent les performances en réduisant la taille des domaines de diffusion.
+
+- **Segmentation Logique**: Les VLANs permettent de diviser un réseau physique en plusieurs réseaux logiques.
+- **Isolation**: Le trafic d'un VLAN est isolé du trafic des autres VLANs, augmentant ainsi la sécurité.
+- **Flexibilité**: Les utilisateurs peuvent être déplacés physiquement sans avoir à reconfigurer le réseau câblé, car leur appartenance au VLAN est logique.
+- **Amélioration des performances**: Réduit la taille des domaines de diffusion, ce qui diminue le trafic inutile et améliore les performances du réseau.
+
+### Routage Inter-VLAN (Router-on-a-stick)
+Le routage inter-VLAN est le processus de communication entre différents VLANs. Puisque les VLANs sont des domaines de diffusion séparés, un routeur ou un commutateur de couche 3 est nécessaire pour permettre aux appareils de différents VLANs de communiquer entre eux. Le concept de "Router-on-a-stick" est une méthode courante pour réaliser le routage inter-VLAN, en utilisant une seule interface physique sur un routeur pour acheminer le trafic entre plusieurs VLANs.
+
+#### Comment fonctionne le Router-on-a-stick ?
+1.  **Interface Trunk sur le Switch**: Le port du commutateur connecté au routeur est configuré comme un port trunk, capable de transporter le trafic de tous les VLANs configurés. Il utilise le protocole IEEE 802.1Q pour marquer les trames Ethernet avec leur ID de VLAN respectif.
+2.  **Sous-interfaces sur le Routeur**: Le routeur est configuré avec une sous-interface logique pour chaque VLAN. Chaque sous-interface est associée à un VLAN spécifique et configurée avec une adresse IP qui agit comme passerelle par défaut pour ce VLAN.
+3.  **Encapsulation**: Le routeur utilise l'encapsulation 802.1Q sur chaque sous-interface pour identifier et séparer le trafic des différents VLANs. Lorsque le trafic arrive du commutateur sur l'interface physique trunkée, le routeur examine l'étiquette 802.1Q pour déterminer à quel VLAN il appartient. Il décapcule ensuite la trame, prend une décision de routage basée sur l'adresse IP de destination, puis encapsule à nouveau la trame avec l'étiquette du VLAN de destination avant de la renvoyer au commutateur (si la destination est un autre VLAN connecté au même routeur) ou de l'acheminer vers une autre interface (si la destination est hors du routeur).
+
+Le Router-on-a-stick est une solution économique et efficace pour le routage inter-VLAN, particulièrement adaptée aux petits et moyens réseaux où un commutateur de couche 3 dédié ne serait pas justifié.
+
 ## ✍️ Auteur : **Landu Tamba Simplice**
